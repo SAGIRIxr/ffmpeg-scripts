@@ -1,78 +1,79 @@
 @echo off
-chcp 65001 >nul
 setlocal enabledelayedexpansion
-title å­—å¹•å†…åµŒå·¥å…· (åŸºäº ffmpeg)
+title ×ÖÄ»ÄÚÇ¶¹¤¾ß (»ùÓÚ ffmpeg)
 
 rem ========================================================
-rem ç”¨æ³•:
-rem   å°†"è§†é¢‘æ–‡ä»¶"å’Œ"srtå­—å¹•æ–‡ä»¶"ä¸€èµ·é€‰ä¸­ï¼Œæ‹–åˆ°æœ¬è„šæœ¬å›¾æ ‡ä¸Šå³å¯ã€‚
-rem   - è‹¥åªæ‹–äº†è§†é¢‘ï¼Œä¼šæç¤ºè¾“å…¥æˆ–æ‹–å…¥å­—å¹•æ–‡ä»¶è·¯å¾„ã€‚
-rem   - è‹¥åªæ‹–äº†å­—å¹•ï¼Œä¼šæç¤ºè¾“å…¥æˆ–æ‹–å…¥è§†é¢‘æ–‡ä»¶è·¯å¾„ã€‚
-rem   - è‹¥ç›´æ¥åŒå‡»è¿è¡Œï¼Œä¼šä¾æ¬¡æç¤ºè¾“å…¥ä¸¤ä¸ªæ–‡ä»¶è·¯å¾„ã€‚
-rem   å¤„ç†ç»“æœä¼šè¾“å‡ºåˆ°è§†é¢‘æ–‡ä»¶æ‰€åœ¨ç›®å½•ã€‚
+rem ÓÃ·¨:
+rem   ½«"ÊÓÆµÎÄ¼ş"ºÍ"Ò»¸ö»ò¶à¸ö srt ×ÖÄ»ÎÄ¼ş"Ò»ÆğÑ¡ÖĞ£¬ÍÏµ½±¾½Å±¾Í¼±êÉÏ¡£
+rem   - ÍÏÈë¼¸Ìõ×ÖÄ»£¬Èí×ÖÄ»Ä£Ê½¾Í»á·â½ø¼¸Ìõ£¨¸÷×Ô¶ÀÁ¢³É¹ì¡¢¿ÉÇĞ»»£©¡£
+rem   - ÈôÖ»ÍÏÁËÊÓÆµ£¬»áÌáÊ¾ÊäÈë»òÍÏÈëÒ»Ìõ×ÖÄ»ÎÄ¼şÂ·¾¶¡£
+rem   - ÈôÖ»ÍÏÁË×ÖÄ»£¬»áÌáÊ¾ÊäÈë»òÍÏÈëÊÓÆµÎÄ¼şÂ·¾¶¡£
+rem   - ÈôÖ±½ÓË«»÷ÔËĞĞ£¬»áÒÀ´ÎÌáÊ¾ÊäÈëÎÄ¼şÂ·¾¶¡£
+rem   ´¦Àí½á¹û»áÊä³öµ½ÊÓÆµÎÄ¼şËùÔÚÄ¿Â¼¡£
 rem
-rem æ³¨æ„:
-rem   - ç¡¬å­—å¹•æ¨¡å¼è¦æ±‚æ–‡ä»¶è·¯å¾„ä¸­ä¸åŒ…å«å•å¼•å·(')ã€é€—å·(,)ç­‰ç‰¹æ®Šç¬¦å·ã€‚
-rem   - è¯·ç¡®ä¿å·²å®‰è£… ffmpeg å¹¶å·²æ·»åŠ åˆ°ç³»ç»Ÿ PATH ç¯å¢ƒå˜é‡ä¸­ã€‚
+rem ¹¦ÄÜ:
+rem   - Èí×ÖÄ»·â×°Ê±»á×Ô¶¯Ê¶±ğÃ¿Ìõ×ÖÄ»µÄÓïÑÔ²¢Ğ´Èë¹ìµÀÓïÑÔ±ê¼Ç
+rem     £¨Èç¼òÌåÖĞÎÄ±ê¼ÇÎª Chinese Simplified£©¡£
+rem   - ÎŞ·¨×Ô¶¯Ê¶±ğÊ±£¬»áÌáÊ¾ÊÖ¶¯Ñ¡ÔñÓïÑÔ£¬²»»áÁôÏÂ unknown¡£
+rem   - Ó²×ÖÄ»Ä£Ê½Ö»ÄÜÉÕÂ¼Ò»Ìõ×ÖÄ»µ½»­Ãæ£»¶àÌõÊ±»áÈÃÄãÑ¡ÔñÆäÖĞÒ»Ìõ¡£
+rem
+rem ×¢Òâ:
+rem   - Ó²×ÖÄ»Ä£Ê½ÒªÇóÎÄ¼şÂ·¾¶ÖĞ²»°üº¬µ¥ÒıºÅ(')¡¢¶ººÅ(,)µÈÌØÊâ·ûºÅ¡£
+rem   - ÇëÈ·±£ÒÑ°²×° ffmpeg ²¢ÒÑÌí¼Óµ½ÏµÍ³ PATH »·¾³±äÁ¿ÖĞ¡£
 rem ========================================================
 
 where ffmpeg >nul 2>nul
 if errorlevel 1 (
-    echo [é”™è¯¯] æœªæ£€æµ‹åˆ° ffmpegï¼Œè¯·å…ˆå®‰è£… ffmpeg å¹¶å°†å…¶æ·»åŠ åˆ°ç³»ç»Ÿ PATH ç¯å¢ƒå˜é‡ã€‚
-    echo ä¸‹è½½åœ°å€: https://ffmpeg.org/download.html
+    echo [´íÎó] Î´¼ì²âµ½ ffmpeg£¬ÇëÏÈ°²×° ffmpeg ²¢½«ÆäÌí¼Óµ½ÏµÍ³ PATH »·¾³±äÁ¿¡£
+    echo ÏÂÔØµØÖ·: https://ffmpeg.org/download.html
     pause
     exit /b 1
 )
 
 set "VIDEO="
-set "SRT="
+set /a SRTCOUNT=0
 
 :parse_args
 if "%~1"=="" goto :after_parse
 if /i "%~x1"==".srt" (
-    if "%SRT%"=="" set "SRT=%~1"
+    set /a SRTCOUNT+=1
+    set "SRT_!SRTCOUNT!=%~1"
 ) else (
-    if "%VIDEO%"=="" set "VIDEO=%~1"
+    if not defined VIDEO set "VIDEO=%~1"
 )
 shift
 goto :parse_args
 
 :after_parse
 
-if "%VIDEO%"=="" (
-    echo æœªæ£€æµ‹åˆ°è§†é¢‘æ–‡ä»¶ã€‚
-    set /p "VIDEO=è¯·è¾“å…¥è§†é¢‘æ–‡ä»¶è·¯å¾„ï¼ˆä¹Ÿå¯å°†è§†é¢‘æ–‡ä»¶æ‹–å…¥æ­¤çª—å£åæŒ‰å›è½¦ï¼‰: "
-    set "VIDEO=%VIDEO:"=%"
-)
-
-if "%SRT%"=="" (
-    echo æœªæ£€æµ‹åˆ°å­—å¹•æ–‡ä»¶ã€‚
-    set /p "SRT=è¯·è¾“å…¥ SRT å­—å¹•æ–‡ä»¶è·¯å¾„ï¼ˆä¹Ÿå¯å°†å­—å¹•æ–‡ä»¶æ‹–å…¥æ­¤çª—å£åæŒ‰å›è½¦ï¼‰: "
-    set "SRT=%SRT:"=%"
-)
+if not defined VIDEO call :ask_video
+if %SRTCOUNT%==0 call :ask_sub
 
 if not exist "%VIDEO%" (
-    echo [é”™è¯¯] æ‰¾ä¸åˆ°è§†é¢‘æ–‡ä»¶: %VIDEO%
+    echo [´íÎó] ÕÒ²»µ½ÊÓÆµÎÄ¼ş: %VIDEO%
     pause
     exit /b 1
 )
 
-if not exist "%SRT%" (
-    echo [é”™è¯¯] æ‰¾ä¸åˆ°å­—å¹•æ–‡ä»¶: %SRT%
-    pause
-    exit /b 1
+for /L %%i in (1,1,%SRTCOUNT%) do (
+    if not exist "!SRT_%%i!" (
+        echo [´íÎó] ÕÒ²»µ½×ÖÄ»ÎÄ¼ş: !SRT_%%i!
+        pause
+        exit /b 1
+    )
 )
 
 echo.
-echo è§†é¢‘æ–‡ä»¶: %VIDEO%
-echo å­—å¹•æ–‡ä»¶: %SRT%
+echo ÊÓÆµÎÄ¼ş: %VIDEO%
+echo ×ÖÄ»ÎÄ¼ş£¨¹² %SRTCOUNT% Ìõ£©:
+for /L %%i in (1,1,%SRTCOUNT%) do call echo   %%i. %%SRT_%%i%%
 echo.
 
-echo è¯·é€‰æ‹©å­—å¹•åµŒå…¥æ–¹å¼:
-echo   [1] ç¡¬å­—å¹• - å°†å­—å¹•çƒ§å½•è¿›ç”»é¢ï¼Œæ°¸ä¹…æ˜¾ç¤ºï¼Œå…¼å®¹æ€§æœ€å¥½ï¼ˆéœ€è¦é‡æ–°ç¼–ç ï¼Œé€Ÿåº¦è¾ƒæ…¢ï¼‰
-echo   [2] è½¯å­—å¹• - å°†å­—å¹•å°è£…ä¸ºç‹¬ç«‹è½¨é“ï¼Œå¯åœ¨æ’­æ”¾å™¨ä¸­å¼€å…³/åˆ‡æ¢ï¼ˆé€Ÿåº¦å¿«ï¼Œè¾“å‡ºä¸º mkvï¼‰
+echo ÇëÑ¡Ôñ×ÖÄ»Ç¶Èë·½Ê½:
+echo   [1] Ó²×ÖÄ» - ½«×ÖÄ»ÉÕÂ¼½ø»­Ãæ£¬ÓÀ¾ÃÏÔÊ¾£¬¼æÈİĞÔ×îºÃ£¨ĞèÒªÖØĞÂ±àÂë£¬ËÙ¶È½ÏÂı£©
+echo   [2] Èí×ÖÄ» - ½«×ÖÄ»·â×°Îª¶ÀÁ¢¹ìµÀ£¬¿ÉÔÚ²¥·ÅÆ÷ÖĞ¿ª¹Ø/ÇĞ»»£¨ËÙ¶È¿ì£¬Êä³öÎª mkv£©
 echo.
-choice /c 12 /n /m "è¯·è¾“å…¥é€‰é¡¹ (1 æˆ– 2): "
+choice /c 12 /n /m "ÇëÊäÈëÑ¡Ïî (1 »ò 2): "
 set "MODE=%errorlevel%"
 echo.
 
@@ -82,25 +83,154 @@ for %%F in ("%VIDEO%") do (
     set "VIDEO_EXT=%%~xF"
 )
 
-if "%MODE%"=="1" (
-    set "OUTPUT=%VIDEO_DIR%%VIDEO_NAME%_ç¡¬å­—å¹•%VIDEO_EXT%"
-    set "SRT_ESC=%SRT:\=/%"
-    set "SRT_ESC=!SRT_ESC::=\:!"
-    echo æ­£åœ¨ç”Ÿæˆç¡¬å­—å¹•è§†é¢‘ï¼Œè¯·ç¨å€™...
-    ffmpeg -y -i "%VIDEO%" -vf "subtitles='!SRT_ESC!':force_style='FontName=Microsoft YaHei,FontSize=20'" -c:a copy "!OUTPUT!"
-) else (
-    set "OUTPUT=%VIDEO_DIR%%VIDEO_NAME%_è½¯å­—å¹•.mkv"
-    echo æ­£åœ¨å°è£…è½¯å­—å¹•ï¼Œè¯·ç¨å€™...
-    ffmpeg -y -i "%VIDEO%" -i "%SRT%" -map 0 -map 1 -c copy -c:s srt "!OUTPUT!"
-)
+if "%MODE%"=="1" goto :do_hard
+goto :do_soft
 
+
+rem ========================================================
+rem Ó²×ÖÄ»£ºÉÕÂ¼Ò»Ìõ×ÖÄ»µ½»­Ãæ
+rem ========================================================
+:do_hard
+set "BURN=!SRT_1!"
+if %SRTCOUNT% GTR 1 call :pick_burn
+set "OUTPUT=%VIDEO_DIR%%VIDEO_NAME%_Ó²×ÖÄ»%VIDEO_EXT%"
+set "SRT_ESC=!BURN:\=/!"
+set "SRT_ESC=!SRT_ESC::=\:!"
+echo ÕıÔÚÉú³ÉÓ²×ÖÄ»ÊÓÆµ£¬ÇëÉÔºò...
+ffmpeg -y -i "%VIDEO%" -vf "subtitles='!SRT_ESC!':force_style='FontName=Microsoft YaHei,FontSize=20'" -c:a copy "!OUTPUT!"
+goto :after_run
+
+
+rem ========================================================
+rem Èí×ÖÄ»£º°ÑËùÓĞ×ÖÄ»ÖğÌõ·â×°Îª¶ÀÁ¢¹ìµÀ
+rem ========================================================
+:do_soft
+set "OUTPUT=%VIDEO_DIR%%VIDEO_NAME%_Èí×ÖÄ».mkv"
+set "INPUTS="
+set "MAPS=-map 0"
+set "METAS="
+set /a SUBIDX=0
+for /L %%i in (1,1,%SRTCOUNT%) do (
+    set "CUR=!SRT_%%i!"
+    echo.
+    echo ×ÖÄ» %%i: !CUR!
+    call :detect_lang "!CUR!"
+    set INPUTS=!INPUTS! -i "!CUR!"
+    set MAPS=!MAPS! -map %%i
+    set METAS=!METAS! -metadata:s:s:!SUBIDX! language=!LANGCODE! -metadata:s:s:!SUBIDX! "title=!LANGTITLE!"
+    set /a SUBIDX+=1
+)
+echo.
+echo ÕıÔÚ·â×° %SRTCOUNT% ÌõÈí×ÖÄ»£¬ÇëÉÔºò...
+ffmpeg -y -i "%VIDEO%" !INPUTS! !MAPS! -c copy -c:s srt !METAS! "!OUTPUT!"
+goto :after_run
+
+
+:after_run
 if errorlevel 1 (
     echo.
-    echo [å¤±è´¥] å¤„ç†è¿‡ç¨‹ä¸­å‡ºç°é”™è¯¯ï¼Œè¯·æ£€æŸ¥ä¸Šæ–¹æ—¥å¿—ã€‚
+    echo [Ê§°Ü] ´¦Àí¹ı³ÌÖĞ³öÏÖ´íÎó£¬Çë¼ì²éÉÏ·½ÈÕÖ¾¡£
 ) else (
     echo.
-    echo [å®Œæˆ] å·²ç”Ÿæˆ: !OUTPUT!
+    echo [Íê³É] ÒÑÉú³É: !OUTPUT!
 )
-
 echo.
 pause
+exit /b 0
+
+
+rem ========================================================
+rem ×Ó³ÌĞò£ºÌáÊ¾ÊäÈëÊÓÆµ
+rem ========================================================
+:ask_video
+echo Î´¼ì²âµ½ÊÓÆµÎÄ¼ş¡£
+set /p "VIDEO=ÇëÊäÈëÊÓÆµÎÄ¼şÂ·¾¶£¨Ò²¿É½«ÊÓÆµÎÄ¼şÍÏÈë´Ë´°¿Úºó°´»Ø³µ£©: "
+set "VIDEO=%VIDEO:"=%"
+goto :eof
+
+
+rem ========================================================
+rem ×Ó³ÌĞò£ºÌáÊ¾ÊäÈëÒ»Ìõ×ÖÄ»
+rem ========================================================
+:ask_sub
+echo Î´¼ì²âµ½×ÖÄ»ÎÄ¼ş¡£
+set /p "S=ÇëÊäÈë SRT ×ÖÄ»ÎÄ¼şÂ·¾¶£¨Ò²¿É½«×ÖÄ»ÎÄ¼şÍÏÈë´Ë´°¿Úºó°´»Ø³µ£©: "
+set "S=%S:"=%"
+set "SRT_1=%S%"
+set /a SRTCOUNT=1
+goto :eof
+
+
+rem ========================================================
+rem ×Ó³ÌĞò£ºÓ²×ÖÄ»Ä£Ê½ÏÂÑ¡ÔñÒªÉÕÂ¼µÄÒ»Ìõ×ÖÄ»
+rem ========================================================
+:pick_burn
+echo Ó²×ÖÄ»Ä£Ê½Ö»ÄÜ½«Ò»Ìõ×ÖÄ»ÉÕÂ¼½ø»­Ãæ£¬¼ì²âµ½ %SRTCOUNT% Ìõ×ÖÄ»:
+for /L %%i in (1,1,%SRTCOUNT%) do call echo   [%%i] %%SRT_%%i%%
+set /p "PICK=ÇëÑ¡ÔñÒªÉÕÂ¼µÄ×ÖÄ»ĞòºÅ (1-%SRTCOUNT%): "
+set "BURN=!SRT_%PICK%!"
+if not defined BURN set "BURN=!SRT_1!"
+goto :eof
+
+
+rem ========================================================
+rem ×Ó³ÌĞò£ºÊ¶±ğ×ÖÄ»ÓïÑÔ£¬ÉèÖÃ LANGCODE / LANGTITLE
+rem   ²ÎÊı %1 = ×ÖÄ»ÎÄ¼şÂ·¾¶
+rem ========================================================
+:detect_lang
+set "LANGCODE="
+set "LANGTITLE="
+set "SRTFILE=%~1"
+set "DETECTOUT=%TEMP%\sublang_detect.txt"
+if exist "%DETECTOUT%" del "%DETECTOUT%" >nul 2>nul
+echo ÕıÔÚÊ¶±ğ×ÖÄ»ÓïÑÔ...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='SilentlyContinue'; $p=$env:SRTFILE; $o=$env:DETECTOUT; $bytes=[System.IO.File]::ReadAllBytes($p); $t=''; try { $u=New-Object System.Text.UTF8Encoding($false,$true); $t=$u.GetString($bytes) } catch { $t=[System.Text.Encoding]::GetEncoding(936).GetString($bytes) }; $kana=0;$hang=0;$cjk=0;$lat=0;$simp=0;$trad=0; $S=@(0x56FD,0x8FD9,0x4EEC,0x6765,0x65F6,0x4F1A,0x4E2A,0x8BF4,0x5BF9,0x5B66,0x5B9E,0x73B0,0x53D1,0x7ECF,0x8FC7,0x8FD8,0x5E94,0x5F53,0x8FDB,0x6837,0x5173,0x70B9,0x89C1,0x8BA9,0x8FB9,0x4E1C,0x8F66,0x4E66,0x957F,0x95E8,0x95EE,0x95F4,0x9A6C,0x98CE,0x98DE,0x9F99,0x7231,0x89C9,0x4E60,0x5199); $T=@(0x570B,0x9019,0x5011,0x4F86,0x6642,0x6703,0x500B,0x8AAA,0x5C0D,0x5B78,0x5BE6,0x73FE,0x767C,0x7D93,0x904E,0x9084,0x61C9,0x7576,0x9032,0x6A23,0x95DC,0x9EDE,0x898B,0x8B93,0x908A,0x6771,0x8ECA,0x66F8,0x9577,0x9580,0x554F,0x9593,0x99AC,0x98A8,0x98DB,0x9F8D,0x611B,0x89BA,0x7FD2,0x5BEB); foreach($ch in $t.ToCharArray()){ $c=[int][char]$ch; if($c -ge 0x3040 -and $c -le 0x30FF){$kana++} elseif(($c -ge 0xAC00 -and $c -le 0xD7A3) -or ($c -ge 0x1100 -and $c -le 0x11FF)){$hang++} elseif(($c -ge 0x4E00 -and $c -le 0x9FFF) -or ($c -ge 0x3400 -and $c -le 0x4DBF)){$cjk++; if($S -contains $c){$simp++}; if($T -contains $c){$trad++}} elseif(($c -ge 0x41 -and $c -le 0x5A) -or ($c -ge 0x61 -and $c -le 0x7A)){$lat++} }; $r='unknown'; if($hang -gt 0){$r='kor'} elseif($kana -gt 0){$r='jpn'} elseif($cjk -gt 0){ if($trad -gt $simp){$r='zht'} elseif($simp -gt $trad){$r='zhs'} else{$r='zhx'} } elseif($lat -gt 0){$r='eng'}; Set-Content -LiteralPath $o -Value $r -Encoding ASCII -NoNewline" >nul 2>nul
+set "DETECT=unknown"
+if exist "%DETECTOUT%" set /p DETECT=<"%DETECTOUT%"
+if exist "%DETECTOUT%" del "%DETECTOUT%" >nul 2>nul
+if /i "!DETECT!"=="zhs" ( set "LANGCODE=chi" & set "LANGTITLE=Chinese Simplified" & echo ÒÑÊ¶±ğ: ¼òÌåÖĞÎÄ [Chinese Simplified] )
+if /i "!DETECT!"=="zht" ( set "LANGCODE=chi" & set "LANGTITLE=Chinese Traditional" & echo ÒÑÊ¶±ğ: ·±ÌåÖĞÎÄ [Chinese Traditional] )
+if /i "!DETECT!"=="jpn" ( set "LANGCODE=jpn" & set "LANGTITLE=Japanese" & echo ÒÑÊ¶±ğ: ÈÕÓï [Japanese] )
+if /i "!DETECT!"=="kor" ( set "LANGCODE=kor" & set "LANGTITLE=Korean" & echo ÒÑÊ¶±ğ: º«Óï [Korean] )
+if /i "!DETECT!"=="eng" ( set "LANGCODE=eng" & set "LANGTITLE=English" & echo ÒÑÊ¶±ğ: Ó¢Óï [English] )
+if /i "!DETECT!"=="zhx" ( echo ¼ì²âµ½ÖĞÎÄ£¬µ«ÎŞ·¨ÅĞ¶Ï¼ò·±£¬ÇëÊÖ¶¯Ñ¡Ôñ¡£& call :pick_cn )
+if "!LANGCODE!"=="" ( echo ÎŞ·¨×Ô¶¯Ê¶±ğ×ÖÄ»ÓïÑÔ£¬ÇëÊÖ¶¯Ñ¡Ôñ¡£& call :manual_lang )
+if "!LANGCODE!"=="" ( set "LANGCODE=und" & set "LANGTITLE=Undetermined" )
+goto :eof
+
+
+rem ========================================================
+rem ×Ó³ÌĞò£ºÖĞÎÄ¼ò·±ÊÖ¶¯Ñ¡Ôñ
+rem ========================================================
+:pick_cn
+choice /c 12 /n /m "ÇëÑ¡Ôñ [1]¼òÌåÖĞÎÄ [2]·±ÌåÖĞÎÄ: "
+set "C=!errorlevel!"
+if "!C!"=="1" ( set "LANGCODE=chi" & set "LANGTITLE=Chinese Simplified" )
+if "!C!"=="2" ( set "LANGCODE=chi" & set "LANGTITLE=Chinese Traditional" )
+goto :eof
+
+
+rem ========================================================
+rem ×Ó³ÌĞò£ºÊÖ¶¯Ñ¡ÔñÓïÑÔ
+rem ========================================================
+:manual_lang
+echo.
+echo ÇëÊÖ¶¯Ñ¡Ôñ×ÖÄ»ÓïÑÔ:
+echo   [1] ¼òÌåÖĞÎÄ Chinese Simplified
+echo   [2] ·±ÌåÖĞÎÄ Chinese Traditional
+echo   [3] Ó¢Óï English
+echo   [4] ÈÕÓï Japanese
+echo   [5] º«Óï Korean
+echo   [6] ÆäËû£¨ÊÖ¶¯ÊäÈëÓïÑÔ´úÂëÓëÃû³Æ£©
+choice /c 123456 /n /m "ÇëÊäÈëÑ¡Ïî (1-6): "
+set "C=!errorlevel!"
+if "!C!"=="1" ( set "LANGCODE=chi" & set "LANGTITLE=Chinese Simplified" )
+if "!C!"=="2" ( set "LANGCODE=chi" & set "LANGTITLE=Chinese Traditional" )
+if "!C!"=="3" ( set "LANGCODE=eng" & set "LANGTITLE=English" )
+if "!C!"=="4" ( set "LANGCODE=jpn" & set "LANGTITLE=Japanese" )
+if "!C!"=="5" ( set "LANGCODE=kor" & set "LANGTITLE=Korean" )
+if "!C!"=="6" (
+    set /p "LANGCODE=ÇëÊäÈë ISO 639-2 ÓïÑÔ´úÂë£¨Èç fre/ger/spa/rus£©: "
+    set /p "LANGTITLE=ÇëÊäÈëÓïÑÔÃû³Æ£¨Èç French£©: "
+)
+goto :eof
